@@ -4,31 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(RegisterUserRequest $request) {
+    protected $userService;
+    
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
 
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
+    public function register(RegisterUserRequest $request)
+    {
+        $user = $this->userService->registerUser($request->all());
 
-        $token = $user->createToken('InsideMyCorruptedMind')->accessToken;
+        // $token = $user->createToken('InsideMyCorruptedMind')->accessToken;
 
-        $response = [
-            'user' => $user,
-            'token' => $token,
-        ];
+        // $response = [
+        //     'user' => $user,
+        //     'token' => $token,
+        // ];
         
         return response()->json([
             'data' =>[
                 'success' => true,
-                'user' => $user,
-                'token' => $token,
+                'user' => $user
             ]
         ]);
     }
