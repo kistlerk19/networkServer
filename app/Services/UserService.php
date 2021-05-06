@@ -26,12 +26,14 @@ class UserService
 
     $newUser = $this->userRepositoryContract->registerUser($userData);
 
-    $token = $newUser->createToken('InsideMyCorruptedMind')->accessToken;
+    // $token = $newUser->createToken('InsideMyCorruptedMind')->accessToken;
 
-    return [
-      'user' => $newUser,
-      'token' => $token,
-    ];
+    // return [
+    //   'user' => $newUser,
+    //   'token' => $token,
+    // ];
+
+    return $newUser;
   }
 
   public function loginUser(array $data)

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Mail\RegisterUserMail;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -28,12 +30,21 @@ class AuthController extends Controller
     {
         $user = $this->userService->registerUser($request->all());
 
-        return response()->json([
-            'data' =>[
-                'success' => true,
-                'user' => $user
-            ]
-        ]);
+        if ($user) 
+        {
+            Mail::to($user->email)->send(new RegisterUserMail($user));
+
+            return $this->responseHelper->successResponse(true, 'Check your email for confirmation.', $user);
+        }
+
+        return $this->responseHelper->errorResponse(false, 'Oopsie! Something went wrong!', null, 500);
+
+        // return response()->json([
+        //     'data' =>[
+        //         'success' => true,
+        //         'user' => $user
+        //     ]
+        // ]);
     }
 
     public function login(LoginUserRequest $request)
