@@ -40,6 +40,7 @@ Route::group([
 ], function() {
     Route::get('me', [UserController::class, 'me']);
     Route::post('status/new', [StatusUpdateController::class, 'store']);
+    Route::get('status/new', [StatusUpdateController::class, 'index']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

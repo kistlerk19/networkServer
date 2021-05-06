@@ -22,7 +22,7 @@ class StatusUpdateController extends Controller
      */
     public function index()
     {
-        //
+        return StatusUpdate::all();
     }
 
     /**

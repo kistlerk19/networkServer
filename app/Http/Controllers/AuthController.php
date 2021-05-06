@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
@@ -12,12 +13,17 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     protected $userService;
+    protected $responseHelper;
     
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ResponseHelper $responseHelper)
     {
         $this->userService = $userService;
+        $this->responseHelper = $responseHelper;
     }
 
+    /**
+     * @param $request
+     */
     public function register(RegisterUserRequest $request)
     {
         $user = $this->userService->registerUser($request->all());
@@ -38,25 +44,23 @@ class AuthController extends Controller
         {
            $token = $user->createToken('InsideMyCorruptedMind');
 
-            return response()->json([
-                'accessToken' => $token->accessToken,
-                'token-type' => 'Bearer',
-                'expires_at' => $token->token->expires_at,
-                'user' => $user
-            ]); 
+           $data = [
+            'user' => $user,
+            'expires_at' => $token->token->expires_at,
+            'token-type' => 'Bearer',
+            'accessToken' => $token->accessToken,
+           ];
+
+            return $this->responseHelper->loginSuccess(true, "Authenticated user!", $data); 
         }
 
-        return response()->json([
-            'error' => 'Unauthorised'
-        ], 401); 
+        return $this->responseHelper->errorResponse(false, 'User not found', null, 401); 
     }
 
     public function me() 
     {
         $user = Auth::user();
 
-        return response()->json([
-            'user' => $user
-        ]); 
+        return $this->responseHelper->successResponse(true, "Authenticated user!", $user); 
     }
 }
