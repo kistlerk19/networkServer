@@ -1,10 +1,10 @@
 @component('mail::message')
 # Introduction
 
-Message for user with username: {{$username}}
-User: {{$name}}
-@component('mail::button', ['url' => ''])
-Button Text
+Message for : {{$name}}
+Click on the button below to confirm your account
+@component('mail::button', ['url' => $url])
+Click to Activate
 @endcomponent
 
 Thanks,<br>

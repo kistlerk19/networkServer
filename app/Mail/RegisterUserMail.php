@@ -12,15 +12,17 @@ class RegisterUserMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $user;
+    protected $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -30,9 +32,11 @@ class RegisterUserMail extends Mailable
      */
     public function build()
     {
+        $url = url('api/users/activate_email/'.$this->token);
         return $this->from('leom7730@gmail.com')->markdown('emails.auth.register', [
             'name' => $this->user->name,
-            'username' => $this->user->username,
+            'url' => $url,
+            // 'username' => $this->user->username,
         ]);
     }
 }

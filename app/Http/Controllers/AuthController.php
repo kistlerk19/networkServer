@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Mail\RegisterUserMail;
 use App\Models\User;
+use App\Services\UserActivationTokenService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,13 @@ class AuthController extends Controller
 {
     protected $userService;
     protected $responseHelper;
+    protected $userActivationTokenService;
     
-    public function __construct(UserService $userService, ResponseHelper $responseHelper)
+    public function __construct(UserService $userService, ResponseHelper $responseHelper, UserActivationTokenService $userActivationTokenService)
     {
         $this->userService = $userService;
         $this->responseHelper = $responseHelper;
+        $this->userActivationTokenService = $userActivationTokenService;
     }
 
     /**
@@ -32,7 +35,9 @@ class AuthController extends Controller
 
         if ($user) 
         {
-            Mail::to($user->email)->send(new RegisterUserMail($user));
+            $token = $this->userActivationTokenService->createNewToken($user->id);
+
+            Mail::to($user->email)->send(new RegisterUserMail($user, $token->token));
 
             return $this->responseHelper->successResponse(true, 'Check your email for confirmation.', $user);
         }
