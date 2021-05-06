@@ -73,6 +73,13 @@ class AuthController extends Controller
         return $this->responseHelper->errorResponse(false, 'User not found', null, 401); 
     }
 
+    public function activateEmail($code)
+    {
+        $checkToken = $this->userActivationTokenService->checkToken($code);
+
+        return $this->responseHelper->successResponse(true, "User activated!", $checkToken);
+    }
+
     public function me() 
     {
         $user = Auth::user();

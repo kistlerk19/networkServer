@@ -20,5 +20,14 @@ class UserActivationTokenRepository implements UserActivationTokenRepositoryCont
       return $e->getMessage();
     }
   }
+  
+  public function checkToken($code)
+  {
+    try {
+      return UserActivationToken::where(['token' => $code])->first();
+    } catch (\Exception $e) {
+      return $e->getMessage();
+    }
+  }
 
 }
