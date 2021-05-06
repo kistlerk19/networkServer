@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StatusUpdateController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +19,29 @@ use Illuminate\Support\Facades\Route;
 
 // TODO: resources (posts)
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'users'
+], function() {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::group([
+        'middleware' => 'auth:api',
+    ], function() {
+        // TODO: password reset
+    });
 });
+
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'user'
+], function() {
+    Route::get('me', [UserController::class, 'me']);
+    Route::post('status/new', [StatusUpdateController::class, 'store']);
+});
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

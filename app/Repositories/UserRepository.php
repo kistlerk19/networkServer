@@ -19,17 +19,5 @@ class UserRepository implements UserRepositoryContract
       return $e->getMessage();
     }
   }
-  
-  public function loginUser(array $data) 
-  {
-    try {
-      $newUser = new User();
-      $newUser->fill($data);
-      $newUser->save();
 
-      return $newUser;
-    } catch (\Exception $e) {
-      return $e->getMessage();
-    }
-  }
 }
