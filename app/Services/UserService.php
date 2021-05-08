@@ -60,4 +60,15 @@ class UserService
 
     return false;
   }
+  
+  public function checkEmail($email)
+  {
+    $checkIfUserExists = $this->userRepositoryContract->checkIfUserExistsByEmail($email);
+
+    if ($checkIfUserExists) {
+      return true;
+    } 
+
+    return false;
+  }
 }
