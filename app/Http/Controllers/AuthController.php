@@ -67,7 +67,7 @@ class AuthController extends Controller
             'accessToken' => $token->accessToken,
            ];
 
-            return $this->responseHelper->loginSuccess(true, "Authenticated user!", $data); 
+            return $this->responseHelper->loginSuccess(true, "Activate User!", $data); 
         }
 
         return $this->responseHelper->errorResponse(false, 'User not found', null, 401); 
@@ -77,7 +77,7 @@ class AuthController extends Controller
     {
         $checkToken = $this->userActivationTokenService->checkToken($code);
 
-        return $this->responseHelper->successResponse(true, "User activated!", $checkToken);
+        return $this->responseHelper->successResponse(true, "User Activation!", $checkToken);
     }
 
     public function me() 
