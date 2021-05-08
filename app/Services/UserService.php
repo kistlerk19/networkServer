@@ -49,4 +49,15 @@ class UserService
 
     return false;
   }
+
+  public function checkUserIsActivated($email)
+  {
+    $checkIfUserExists = $this->userRepositoryContract->checkIfUserExistsByEmail($email);
+
+    if ($checkIfUserExists && $checkIfUserExists->email_verified_at) {
+      return true;
+    } 
+
+    return false;
+  }
 }
