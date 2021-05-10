@@ -119,7 +119,7 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $checkToken->delete();
+        $checkToken->delete();   
 
         return $this->responseHelper->successResponse(true, "Password was successfully changed.", $user);
     }
