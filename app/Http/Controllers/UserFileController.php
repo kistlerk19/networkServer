@@ -2,49 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Requests\UserImageUploadRequest;
 use App\Models\UserFile;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserFileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $imageUploadService;
+    protected $responseHelper;
+
+    public function __construct(ImageUploadService $imageUploadService, ResponseHelper $responseHelper)
     {
-        //
+        $this->imageUploadService = $imageUploadService;
+        $this->responseHelper = $responseHelper;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserImageUploadRequest $request)
     {
-       dd("Gh");
+        // dd(url(Storage::url('bob')));
+       $file = $request->file->storeAs(
+           'public/images/' . auth()->user()->id, $request->file->getClientOriginalName()
+       );
+
+       $this->imageUploadService->saveFile($file);
+
+      return $this->responseHelper->successResponse(true, "Image Upload Success!", []);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserFile  $userFile
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(UserFile $userFile)
     {
         //
