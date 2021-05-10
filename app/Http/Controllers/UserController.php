@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $user = User::with('status_updates')->find($user_id);
+        $user = User::with(['status_updates'])->find($user_id);
 
         // $statusUpdates = $user->status_updates()->get();
 

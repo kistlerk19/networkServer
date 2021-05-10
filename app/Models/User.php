@@ -48,4 +48,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(StatusUpdate::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(UserFile::class);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'username' => $this->username,
+            'email' => $this->email,
+            'images' => $this->images,
+            'status_updates' => $this->status_updates,
+        ];
+    }
 }
