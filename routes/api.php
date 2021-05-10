@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StatusUpdateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserFileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,7 @@ Route::group([
     Route::get('me', [UserController::class, 'me']);
     Route::post('status/new', [StatusUpdateController::class, 'store']);
     Route::get('status/new', [StatusUpdateController::class, 'index']);
+    Route::post('image-upload', [UserFileController::class, 'store']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
