@@ -29,7 +29,7 @@ Route::group([
     Route::post('activate_email/{code}', [AuthController::class, 'activateEmail']);
 
     Route::post('forgot_password', [AuthController::class, 'forgotPassword']);
-    Route::get('forgot_password/{token}', [AuthController::class, 'resetPasswordToken']);
+    Route::post('forgot_password/{token}', [AuthController::class, 'resetPasswordToken']);
 
     Route::group([
         'middleware' => 'auth:api',

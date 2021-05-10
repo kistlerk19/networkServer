@@ -26,4 +26,12 @@ class PasswordResetRepository implements PasswordResetRepositoryContract
       throw $th;
     }
   }
+
+  public function checkReset($email, $token)
+  {
+    return PasswordReset::where([
+      'email' => $email,
+      'token' => $token
+    ])->first();
+  }
 }

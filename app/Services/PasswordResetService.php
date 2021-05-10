@@ -18,4 +18,9 @@ class PasswordResetService
   {
     return $this->passwordResetRepositoryContract->createPasswordReset($email);
   }
+
+  public function checkReset($email, $token)
+  {
+    return $this->passwordResetRepositoryContract->checkReset($email, $token);
+  }
 }
