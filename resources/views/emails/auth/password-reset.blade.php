@@ -1,10 +1,10 @@
 @component('mail::message')
 # Introduction
 
-Message for : {{$name}}
-Click on the button below to confirm your account
+Message for : {{$email}}
+Click on the button below to reset your password
 @component('mail::button', ['url' => $url])
-Click to Activate
+Password Reset Link
 @endcomponent
 
 Thanks,<br>

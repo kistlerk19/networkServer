@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Mail\PasswordResetMail;
 use App\Mail\RegisterUserMail;
 use App\Models\User;
 use App\Services\PasswordResetService;
@@ -99,9 +100,15 @@ class AuthController extends Controller
             return $this->responseHelper->errorResponse(false, "User email does not exist", null, 404);
         }
 
-        $createPasswordReset = $this->passwordResetService->createPasswordReset($request->email);
+        $passwordResetData = $this->passwordResetService->createPasswordReset($request->email);
+        Mail::to($request->email)->send(new PasswordResetMail($passwordResetData));
 
-        return $this->responseHelper->successResponse(true, "Check Your Email", $createPasswordReset);
+        return $this->responseHelper->successResponse(true, "Check Your Email", $passwordResetData);
+    }
+
+    public function resetPasswordToken()
+    {
+        dd("we are here...");
     }
 
     public function me()

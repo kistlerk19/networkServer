@@ -12,11 +12,15 @@ class PasswordResetRepository implements PasswordResetRepositoryContract
   public function createPasswordReset($email)
   {
     try {
-      $newReset = new PasswordReset();
-      $newReset->email = $email;
-      $newReset->token = Str::random(48);
-      $newReset->save();
 
+      $newReset = PasswordReset::updateOrCreate(
+        ['email' => $email],
+        [
+          'email' => $email,
+          'token' => Str::random(64),
+        ]
+      );
+      
       return $newReset;
     } catch (\Throwable $th) {
       throw $th;
