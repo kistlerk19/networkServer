@@ -47,6 +47,7 @@ Route::group([
     Route::post('status/new', [StatusUpdateController::class, 'store']);
     Route::get('status/new', [StatusUpdateController::class, 'index']);
     Route::post('image-upload', [UserFileController::class, 'store']);
+    Route::get('add_friend/{id}', [UserFileController::class, 'addFriend']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

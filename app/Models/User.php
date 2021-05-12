@@ -53,6 +53,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserFile::class);
     }
+    
+    
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id');
+    }
 
     public function toArray()
     {
@@ -61,6 +67,7 @@ class User extends Authenticatable
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
+            'friends' => $this->friends,
             'images' => $this->images,
             'status_updates' => $this->status_updates,
         ];

@@ -31,6 +31,19 @@ class UserFileController extends Controller
 
       return $this->responseHelper->successResponse(true, "Image Upload Success!", []);
     }
+    
+    public function addFriend($id)
+    {
+        // Add Friend
+        // $addFriend = auth()->user()->friends()->attach([2,3,5,6]);
+
+        // Remove Friend
+        // $removeFriend = auth()->user()->friends()->detach([$id]);
+        // Sync friends
+        $removeFriend = auth()->user()->friends()->sync([$id]);
+
+      return $this->responseHelper->successResponse(true, "Added User!", []);
+    }
 
 
     public function show(UserFile $userFile)

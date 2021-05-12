@@ -20,7 +20,7 @@ class UserFile extends Model
     {
         return [
             'id' => $this->id,
-            'file_name' => $this->file_name,
+            'file_path' => $this->file_name,
         ];
     }
 }
