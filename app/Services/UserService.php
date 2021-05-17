@@ -21,14 +21,14 @@ class UserService
 
   public function registerUser(array $data)
   {
-    $identifier = $this->miscHelpers->IDGenerator(new User, 'identifier', 8, 'AUTHC');
+    $identifier = $this->miscHelpers->IDGenerator(new User, 'user_identifier', 8, 'AUTHC');
 
     $userData = [
       'name' => $data['name'],
       'username' => $data['username'],
       'email' => $data['email'],
       'password' => bcrypt($data['password']),
-      'identifier' => $identifier
+      'user_identifier' => $identifier
     ];
 
     $newUser = $this->userRepositoryContract->registerUser($userData);

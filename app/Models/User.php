@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'user_identifier'
     ];
 
     /**
@@ -68,7 +69,7 @@ class User extends Authenticatable
     public function toArray()
     {
         return [
-            'id' => $this->id,
+            'identifier' => $this->user_identifier,
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,

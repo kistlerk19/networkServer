@@ -19,7 +19,7 @@ class Post extends Model
     public function toArray()
     {
         return [
-            'id' => $this->id,
+            'identifier' => $this->identifier,
             'title' => $this->title,
             'slug' => $this->slug,
             'content' => $this->content,
