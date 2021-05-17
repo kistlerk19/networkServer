@@ -2,26 +2,33 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\UserRepositoryContract;
+use App\Helpers\MiscHelpers;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Contracts\UserRepositoryContract;
 
 class UserService
 {
 
   protected $userRepositoryContract;
+  protected $miscHelpers;
 
-  public function __construct(UserRepositoryContract $userRepositoryContract)
+  public function __construct(UserRepositoryContract $userRepositoryContract, MiscHelpers $miscHelpers)
   {
     $this->userRepositoryContract = $userRepositoryContract;
+    $this->miscHelpers = $miscHelpers;
   }
 
   public function registerUser(array $data)
   {
+    $identifier = $this->miscHelpers->IDGenerator(new User, 'identifier', 8, 'AUTHC');
+
     $userData = [
       'name' => $data['name'],
       'username' => $data['username'],
       'email' => $data['email'],
       'password' => bcrypt($data['password']),
+      'identifier' => $identifier
     ];
 
     $newUser = $this->userRepositoryContract->registerUser($userData);

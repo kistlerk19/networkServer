@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Helpers\MiscHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    protected $miscHelpers;
+
+    public function __construct(MiscHelpers $miscHelpers)
+    {
+        $this->miscHelpers = $miscHelpers;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return Post::all();
     }
 
     /**
@@ -35,7 +45,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId = Auth::user()->id;
+
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+
+        $identifier = $this->miscHelpers->IDGenerator(new Post, 'identifier', 8, 'KXY');
+        $slug = Str::slug($fields['title'], '-');
+
+        // dd($identifier);
+        
+        $post = Post::create([
+            'user_id' => $userId,
+            'title' => $fields['title'],
+            'content' => $fields['content'],
+            'identifier' => $identifier,
+            'slug' => $slug
+        ]);
+
+        $post->save();
+        
+        return $post;
     }
 
     /**

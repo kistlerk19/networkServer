@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\StatusUpdateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFileController;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // TODO: resources (posts)
-
+Route::get('/posts', [PostController::class, 'index']);
 
 Route::group([
     'middleware' => 'api',
@@ -46,6 +47,8 @@ Route::group([
     Route::get('me', [UserController::class, 'me']);
     Route::post('status/new', [StatusUpdateController::class, 'store']);
     Route::get('status/new', [StatusUpdateController::class, 'index']);
+    Route::post('posts/new', [PostController::class, 'store']);
+    Route::get('posts/new', [PostController::class, 'index']);
     Route::post('image-upload', [UserFileController::class, 'store']);
     Route::get('add_friend/{id}', [UserFileController::class, 'addFriend']);
 });

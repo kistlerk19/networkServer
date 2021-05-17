@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(StatusUpdate::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function images()
     {
         return $this->hasMany(UserFile::class);
@@ -70,6 +75,7 @@ class User extends Authenticatable
             'friends' => $this->friends,
             'images' => $this->images,
             'status_updates' => $this->status_updates,
+            'posts' => $this->posts,
         ];
     }
 }
