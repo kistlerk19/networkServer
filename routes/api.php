@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\HouseController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StatusUpdateController;
 use App\Http\Controllers\UserController;
@@ -19,8 +22,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: resources (posts)
-Route::get('/posts', [PostController::class, 'index']);
+
+Route::get('posts', [PostController::class, 'index']);
+Route::get('user/experiences', [ExperienceController::class, 'index']);
+Route::get('user/houses', [HouseController::class, 'index']);
+Route::get('events', [ActivityController::class, 'index']);
 
 Route::group([
     'middleware' => 'api',
@@ -51,6 +57,14 @@ Route::group([
     Route::get('posts/new', [PostController::class, 'index']);
     Route::post('image-upload', [UserFileController::class, 'store']);
     Route::get('add_friend/{id}', [UserFileController::class, 'addFriend']);
+});
+
+Route::group([
+    'middleware' => 'auth:admins',
+    'prefix' => 'admin'
+], function() {
+    Route::post('user/houses', [HouseController::class, 'store']);
+    Route::post('events', [ActivityController::class, 'store']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

@@ -19,8 +19,8 @@ class CreateHousesTable extends Migration
             $table->string('image_url');
             $table->string('type')->nullable();
             $table->text('description');
-            $table->int('beds');
-            $table->int('bedrooms');
+            $table->integer('beds');
+            $table->integer('bedrooms');
             $table->double('price');
             $table->double('discountPrice')->nullable();
             $table->double('totalPrice');

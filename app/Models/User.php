@@ -54,6 +54,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+    
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
 
     public function images()
     {
@@ -77,6 +92,9 @@ class User extends Authenticatable
             'images' => $this->images,
             'status_updates' => $this->status_updates,
             'posts' => $this->posts,
+            'houses' => $this->houses,
+            'experiences' => $this->experiences,
+            'activities' => $this->activities,
         ];
     }
 }

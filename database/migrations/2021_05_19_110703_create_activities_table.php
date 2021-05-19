@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExperiencesTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateExperiencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('experiences', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
-
-            $table->string('title');
-            $table->string('image_url');
-            $table->text('description');
-            $table->float('rating');
-            $table->double('lat')->nullable();
-            $table->double('lng')->nullable();
+            $table->string('thumbnail');
+            $table->string('venue');
+            $table->string('price');
+            $table->string('type');
+            $table->date('date');
+            $table->timeTz('startTime', $precision = 0);
+            $table->timeTz('endTime', $precision = 0);
 
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users');
@@ -37,6 +37,6 @@ class CreateExperiencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('experiences');
+        Schema::dropIfExists('activities');
     }
 }

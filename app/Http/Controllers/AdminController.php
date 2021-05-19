@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\House;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
-class HouseController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class HouseController extends Controller
      */
     public function index()
     {
-        return House::all();
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class HouseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\House  $house
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(House $house)
+    public function show(Admin $admin)
     {
         //
     }
@@ -52,10 +52,10 @@ class HouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\House  $house
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(House $house)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -64,10 +64,10 @@ class HouseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\House  $house
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, House $house)
+    public function update(Request $request, Admin $admin)
     {
         //
     }
@@ -75,10 +75,10 @@ class HouseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\House  $house
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(House $house)
+    public function destroy(Admin $admin)
     {
         //
     }

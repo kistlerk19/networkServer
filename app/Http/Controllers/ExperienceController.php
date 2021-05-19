@@ -14,7 +14,7 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        //
+        return Experience::all();
     }
 
     /**
